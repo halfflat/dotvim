@@ -19,3 +19,6 @@
 [submodule "bundle/julia-vim"]
 	path = bundle/julia-vim
 	url = git@github.com:JuliaEditorSupport/julia-vim
+[submodule "bundle/diffchar"]
+	path = bundle/diffchar
+	url = git@github.com:rickhowe/diffchar.vim
