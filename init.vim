@@ -9,22 +9,29 @@ set wildmenu
 
 " maintains eparate cache directory for neovim
 if has('nvim')
-    let s:datadir = $HOME."/.local/share/nvim"
+    let s:datadir=$HOME."/.local/share/nvim"
     let &viminfo="'100,s100,<10000"
+    set undofile
 else
-    let s:datadir = $HOME."/.local/share/vim"
+    let s:datadir=$HOME."/.local/share/vim"
     let &viminfo="'100,s100,<10000,n".s:datadir."/viminfo"
-    let &undodir=s:datadir."/undo"
     let &directory=s:datadir."/swap"
     let &backupdir=s:datadir."/backup"
+    if v:version > 702
+	let &undodir=s:datadir."/undo"
+	set undofile
+    endif
 endif
 
-set undofile
 set hidden
 
 filetype plugin on
 
 " pathogen script manages .vim/bundle scripts
+let g:pathogen_blacklist=[]
+if v:version < 703 && !has("gui")
+    let g:pathogen_blacklist=["csapprox"]
+endif
 set rtp+=~/.vim/bundle/pathogen
 call pathogen#infect()
 
