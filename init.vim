@@ -47,7 +47,6 @@ let g:vim_markdown_frontmatter=1
 let g:DiffModeSync=0
 
 " vim-signature customization
-highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
 let g:SignatureMarkOrder="\m▶"
 let g:SignatureWrapJumps=0
 
@@ -113,6 +112,7 @@ syntax on
 highlight SignColumn NONE
 highlight! link EOLWhiteSpace Error
 highlight CursorLine guibg=green ctermbg=yellow guifg=black ctermbg=black term=reverse 
+highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
 aug hgroup
 au!
 au Syntax * syntax match EOLWhiteSpace "\s\+$"
