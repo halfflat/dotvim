@@ -22,3 +22,6 @@
 [submodule "bundle/diffchar"]
 	path = bundle/diffchar
 	url = git@github.com:rickhowe/diffchar.vim
+[submodule "bundle/vim-fugitive"]
+	path = bundle/vim-fugitive
+	url = git@github.com:tpope/vim-fugitive

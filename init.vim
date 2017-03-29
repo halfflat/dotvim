@@ -3,9 +3,9 @@ set shiftwidth=4
 set laststatus=2
 set backspace=2
 set hlsearch
-set ruler
-
+set nojoinspaces
 set wildmenu
+set statusline=%<%f\ %{fugitive#statusline()}%h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " maintains eparate cache directory for neovim
 if has('nvim')
@@ -46,6 +46,11 @@ let g:vim_markdown_frontmatter=1
 " diffchar plugin options
 let g:DiffModeSync=0
 
+" vim-signature customization
+highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
+let g:SignatureMarkOrder="\m▶"
+let g:SignatureWrapJumps=0
+
 aug cgroup
 au!
 au FileType * set nocindent noautoindent
@@ -55,8 +60,6 @@ aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
 set cinkeys=0{,0},:,0#,!<Tab>,!^F
-
-set nojoinspaces
 
 " local keybindings
 
@@ -115,13 +118,7 @@ au!
 au Syntax * syntax match EOLWhiteSpace "\s\+$"
 aug END
 
-" vim-signature customization
-highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
-let g:SignatureMarkOrder="\m▶"
-let g:SignatureWrapJumps=0
-
 " fixed font in gui; menus & scrollbars:
-
 set guifont=Fixed\ Medium\ Semi-Condensed\ 10
 " set guifont=6x13
 set guioptions=aegi
