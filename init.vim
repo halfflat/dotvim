@@ -36,8 +36,8 @@ let g:vim_markdown_frontmatter=1
 aug cgroup
 au!
 au FileType * set nocindent noautoindent
-au FileType c,h,cc,cpp,cs,hpp,java set cindent
-au FileType c,h,cc,cpp,cs,hpp,java,julia,python set expandtab softtabstop=4
+au FileType c,h,cc,cpp,cs,hpp,cu,java set cindent
+au FileType c,h,cc,cpp,cs,hpp,cu,java,julia,python set expandtab softtabstop=4
 aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
