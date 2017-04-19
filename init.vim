@@ -1,27 +1,37 @@
 set encoding=utf-8
 set shiftwidth=4
 set laststatus=2
-
+set backspace=2
+set hlsearch
+set nojoinspaces
 set wildmenu
+set statusline=%<%f\ %{fugitive#statusline()}%h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " maintains eparate cache directory for neovim
 if has('nvim')
-    let s:datadir = $HOME."/.local/share/nvim"
+    let s:datadir=$HOME."/.local/share/nvim"
     let &viminfo="'100,s100,<10000"
+    set undofile
 else
-    let s:datadir = $HOME."/.local/share/vim"
+    let s:datadir=$HOME."/.local/share/vim"
     let &viminfo="'100,s100,<10000,n".s:datadir."/viminfo"
-    let &undodir=s:datadir."/undo"
     let &directory=s:datadir."/swap"
     let &backupdir=s:datadir."/backup"
+    if v:version > 702
+	let &undodir=s:datadir."/undo"
+	set undofile
+    endif
 endif
 
-set undofile
 set hidden
 
 filetype plugin on
 
 " pathogen script manages .vim/bundle scripts
+let g:pathogen_blacklist=[]
+if v:version < 703 && !has("gui")
+    let g:pathogen_blacklist=["csapprox"]
+endif
 set rtp+=~/.vim/bundle/pathogen
 call pathogen#infect()
 
@@ -33,11 +43,18 @@ let g:buftabline_separators=1
 let g:vim_markdown_math=1
 let g:vim_markdown_frontmatter=1
 
+" diffchar plugin options
+let g:DiffModeSync=0
+
+" vim-signature customization
+let g:SignatureMarkOrder="\m▶"
+let g:SignatureWrapJumps=0
+
 aug cgroup
 au!
 au FileType * set nocindent noautoindent
 au FileType c,h,cc,cpp,cs,hpp,cu,java set cindent
-au FileType c,h,cc,cpp,cs,hpp,cu,java,julia,python set expandtab softtabstop=4
+au FileType c,h,cc,cpp,cmake,cs,hpp,cu,java,julia,python set expandtab softtabstop=4
 aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
@@ -50,7 +67,7 @@ nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprev<cr>
 
 " step between number mode, relative number mode, and no number
-noremap <Leader>n :if &rnu<bar>set nornu<bar>set number<bar>elseif &number<bar>set nonumber<bar>else<bar>set rnu<bar>endif<bar><cr>
+noremap <silent> <Leader>n :if &number<bar>set nonumber<bar>set rnu<bar>elseif &rnu<bar>set nornu<bar>else<bar>set number<bar>endif<cr>
 
 " toggle mark display (vim-signature plugin)
 noremap <Leader>m :SignatureToggle<cr>
@@ -62,8 +79,22 @@ noremap <Leader>d :bp<bar>bd #<cr>
 xmap <Tab>  <Plug>(EasyAlign)
 nmap g<Tab> <Plug>(EasyAlign)
 
-" redraw and clear search highlight
-nmap <c-l> :redraw<bar>:noh<cr>
+" redraw and clear search highlight, update diff, highlight current line
+function! SetNoCul(x)
+    set nocul
+endf
+function Refresh()
+    redraw
+    if has('diff')
+	diffupdate
+    endif
+    if has('timers')
+	set cul
+        call timer_start(200, 'SetNoCul')
+    endif
+endf
+noremap <silent> <c-l> :noh<bar>call Refresh()<cr>
+inoremap <silent> <c-l> <c-o>:noh<bar>call Refresh()<cr>
 
 " quick copy to/paste from clipboard
 nnoremap <Leader>y "+y
@@ -80,20 +111,16 @@ colorscheme charon
 syntax on
 highlight SignColumn NONE
 highlight! link EOLWhiteSpace Error
+highlight CursorLine guibg=green ctermbg=yellow guifg=black ctermbg=black term=reverse 
+highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
 aug hgroup
 au!
 au Syntax * syntax match EOLWhiteSpace "\s\+$"
 aug END
 
-" vim-signature customization
-highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
-let g:SignatureMarkOrder="\m▶"
-let g:SignatureWrapJumps=0
-
 " fixed font in gui; menus & scrollbars:
-
 set guifont=Fixed\ Medium\ Semi-Condensed\ 10
 " set guifont=6x13
-" set guioptions=aegimt
 set guioptions=aegi
+" set guioptions=aegimt
 
