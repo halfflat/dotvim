@@ -50,11 +50,24 @@ let g:DiffModeSync=0
 let g:SignatureMarkOrder="\m▶"
 let g:SignatureWrapJumps=0
 
+" riv plugin options
+let g:riv_disable_folding=1
+
+" latex-unicorder plugin options
+" (use own keybindings)
+" let g:unicoder_cancel_normal=1
+" let g:unicoder_cancel_insert=1
+" let g:unicoder_cancel_visual=1
+let g:unicoder_no_map=1
+
+" rainbow parentheses plugin
+let g:rainbow_active=1
+
 aug cgroup
 au!
 au FileType * set nocindent noautoindent
 au FileType c,h,cc,cpp,cs,hpp,cu,java set cindent
-au FileType c,h,cc,cpp,cmake,cs,hpp,cu,java,julia,python set expandtab softtabstop=4
+au FileType c,h,cc,cpp,cmake,cs,hpp,cu,haskell,java,julia,python,scheme,racket,lisp set expandtab softtabstop=4
 aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
@@ -73,11 +86,18 @@ noremap <silent> <Leader>n :if &number<bar>set nonumber<bar>set rnu<bar>elseif &
 noremap <Leader>m :SignatureToggle<cr>
 
 " delete buffer but keep window
-noremap <Leader>d :bp<bar>bd #<cr>
+noremap <Leader>q :bp<bar>bd #<cr>
 
 " invoke EasyAlign plugin with Tab
 xmap <Tab>  <Plug>(EasyAlign)
 nmap g<Tab> <Plug>(EasyAlign)
+
+" invoke latex-unicode conversion
+nnoremap <Leader>l :call unicoder#start(0)<cr>
+vnoremap <Leader>l :<c-u>call unicoder#selection()<cr>
+
+" toggle rainbow parentheses
+noremap <Leader>r :RainbowToggle
 
 " redraw and clear search highlight, update diff, highlight current line
 function! SetNoCul(x)
@@ -93,14 +113,17 @@ function Refresh()
         call timer_start(200, 'SetNoCul')
     endif
 endf
-noremap <silent> <c-l> :noh<bar>call Refresh()<cr>
+nnoremap <silent> <c-l> :noh<bar>call Refresh()<cr>
 inoremap <silent> <c-l> <c-o>:noh<bar>call Refresh()<cr>
 
 " quick copy to/paste from clipboard
 nnoremap <Leader>y "+y
 vnoremap <Leader>y "+y
+nnoremap <Leader>d "+d
+vnoremap <Leader>d "+d
 nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
+set clipboard=unnamed
 
 " prev and next match from 
 nnoremap ]q :cnext<cr>
@@ -113,14 +136,19 @@ highlight SignColumn NONE
 highlight! link EOLWhiteSpace Error
 highlight CursorLine guibg=green ctermbg=yellow guifg=black ctermbg=black term=reverse 
 highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
+highlight VertSplit guifg=darkgrey ctermfg=darkgrey
 aug hgroup
 au!
 au Syntax * syntax match EOLWhiteSpace "\s\+$"
 aug END
 
+" subdued vertical split
+set fillchars+=vert:·
+
 " fixed font in gui; menus & scrollbars:
 set guifont=Fixed\ Medium\ Semi-Condensed\ 10
 " set guifont=6x13
+
 set guioptions=aegi
 " set guioptions=aegimt
 

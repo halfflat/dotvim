@@ -1,19 +1,19 @@
-[submodule ".vim/bundle/buftabline"]
+[submodule "bundle/buftabline"]
 	path = bundle/buftabline
 	url = git@github.com:ap/vim-buftabline.git
-[submodule ".vim/bundle/csapprox"]
+[submodule "bundle/csapprox"]
 	path = bundle/csapprox
 	url = git@github.com:godlygeek/csapprox.git
-[submodule ".vim/bundle/pathogen"]
+[submodule "bundle/pathogen"]
 	path = bundle/pathogen
 	url = git@github.com:tpope/vim-pathogen.git
-[submodule ".vim/bundle/easy-align"]
+[submodule "bundle/easy-align"]
 	path = bundle/easy-align
 	url = git@github.com:junegunn/vim-easy-align.git
-[submodule ".vim/bundle/markdown"]
+[submodule "bundle/markdown"]
 	path = bundle/markdown
 	url = git@github.com:plasticboy/vim-markdown.git
-[submodule ".vim/bundle/signature"]
+[submodule "bundle/signature"]
 	path = bundle/signature
 	url = git@github.com:kshenoy/vim-signature.git
 [submodule "bundle/julia-vim"]
@@ -25,3 +25,18 @@
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive
+[submodule "bundle/latex-unicoder"]
+	path = bundle/latex-unicoder
+	url = git@github.com:joom/latex-unicoder.vim
+[submodule "bundle/vrod"]
+	path = bundle/vrod
+	url = git@github.com:MicahElliott/vrod
+[submodule "bundle/vim-racket"]
+	path = bundle/vim-racket
+	url = git@github.com:wlangstroth/vim-racket
+[submodule "bundle/rainbow"]
+	path = bundle/rainbow
+	url = git@github.com:luochen1990/rainbow
+[submodule "bundle/riv"]
+	path = bundle/riv
+	url = git@github.com:Rykka/riv.vim
