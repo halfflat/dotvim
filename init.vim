@@ -7,7 +7,7 @@ set nojoinspaces
 set wildmenu
 set statusline=%<%f\ %{fugitive#statusline()}%h%m%r%=%-14.(%l,%c%V%)\ %P
 
-" maintains eparate cache directory for neovim
+" maintain separate cache directory for neovim
 if has('nvim')
     let s:datadir=$HOME."/.local/share/nvim"
     let &viminfo="'100,s100,<10000"
@@ -67,11 +67,14 @@ aug cgroup
 au!
 au FileType * set nocindent noautoindent
 au FileType c,h,cc,cpp,cs,hpp,cu,java set cindent
-au FileType c,h,cc,cpp,cmake,cs,hpp,cu,haskell,java,julia,python,scheme,racket,lisp set expandtab softtabstop=4
+au FileType c,h,cc,cpp,cmake,cs,hpp,cu,haskell,java,julia,python,scheme,racket,lisp,sh set expandtab softtabstop=4
 aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
 set cinkeys=0{,0},:,0#,!<Tab>,!^F
+
+" spell check
+set spelllang=en
 
 " local keybindings
 
@@ -85,8 +88,9 @@ noremap <silent> <Leader>n :if &number<bar>set nonumber<bar>set rnu<bar>elseif &
 " toggle mark display (vim-signature plugin)
 noremap <Leader>m :SignatureToggle<cr>
 
-" delete buffer but keep window
-noremap <Leader>q :bp<bar>bd #<cr>
+" delete buffer but keep window (use bbye plugin instead
+" of bp|bd#).
+noremap <Leader>q :Bdelete<cr>
 
 " invoke EasyAlign plugin with Tab
 xmap <Tab>  <Plug>(EasyAlign)
@@ -97,7 +101,7 @@ nnoremap <Leader>l :call unicoder#start(0)<cr>
 vnoremap <Leader>l :<c-u>call unicoder#selection()<cr>
 
 " toggle rainbow parentheses
-noremap <Leader>r :RainbowToggle
+noremap <Leader>r :RainbowToggle<cr>
 
 " redraw and clear search highlight, update diff, highlight current line
 function! SetNoCul(x)
@@ -125,9 +129,11 @@ nnoremap <Leader>p "+p
 nnoremap <Leader>P "+P
 set clipboard=unnamed
 
-" prev and next match from 
+" prev and next match from quickfix and location lists
 nnoremap ]q :cnext<cr>
 nnoremap [q :cprev<cr>
+nnoremap ]l :lnext<cr>
+nnoremap [l :lprev<cr>
 
 " highlighting
 colorscheme charon
