@@ -135,6 +135,12 @@ nnoremap [q :cprev<cr>
 nnoremap ]l :lnext<cr>
 nnoremap [l :lprev<cr>
 
+" arrow short cuts for prev/next mark
+nnoremap <c-Down> ]`
+vnoremap <c-Down> ]`
+nnoremap <c-Up> [`
+vnoremap <c-Up> [`
+
 " highlighting
 colorscheme charon
 syntax on
