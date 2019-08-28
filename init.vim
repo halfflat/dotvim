@@ -18,8 +18,8 @@ else
     let &directory=s:datadir."/swap"
     let &backupdir=s:datadir."/backup"
     if v:version > 702
-	let &undodir=s:datadir."/undo"
-	set undofile
+        let &undodir=s:datadir."/undo"
+        set undofile
     endif
 endif
 
@@ -67,11 +67,17 @@ aug cgroup
 au!
 au FileType * set nocindent noautoindent
 au FileType c,h,cc,cpp,cs,hpp,cu,java set cindent
-au FileType c,h,cc,cpp,cmake,cs,hpp,cu,haskell,java,julia,python,scheme,racket,lisp,sh set expandtab softtabstop=4
+au FileType c,h,cc,cpp,cmake,cs,hpp,cu,haskell,java,json,julia,python,scheme,racket,lisp,sh,yaml set expandtab softtabstop=4
 aug END
 
 set cinoptions=>s,:0,l1,g0,t0,Ws
-set cinkeys=0{,0},:,0#,!<Tab>,!^F
+    set cinkeys=0{,0},:,0#,!<Tab>,!^F
+
+" special character display
+set list
+set listchars=tab:⇥\ ,trail:␣,nbsp:⍽
+set showbreak=↳
+set cpoptions+=n
 
 " spell check
 set spelllang=en
@@ -83,7 +89,7 @@ nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprev<cr>
 
 " step between number mode, relative number mode, and no number
-noremap <silent> <Leader>n :if &number<bar>set nonumber<bar>set rnu<bar>elseif &rnu<bar>set nornu<bar>else<bar>set number<bar>endif<cr>
+noremap <silent> <Leader>n :if &number<bar>set nonumber<bar>set rnu<bar>elseif &rnu<bar>set nornu<bar>set showbreak=↪<bar>else<bar>set number<bar>set showbreak=\ \ ↪\ <bar>endif<cr>
 
 " toggle mark display (vim-signature plugin)
 noremap <Leader>m :SignatureToggle<cr>
@@ -110,10 +116,10 @@ endf
 function Refresh()
     redraw
     if has('diff')
-	diffupdate
+        diffupdate
     endif
     if has('timers')
-	set cul
+        set cul
         call timer_start(200, 'SetNoCul')
     endif
 endf
@@ -141,18 +147,18 @@ vnoremap <c-Down> ]`
 nnoremap <c-Up> [`
 vnoremap <c-Up> [`
 
+" redo all undos
+nnoremap <Leader>r :exec 'undo' undotree()['seq_last']<cr>
+vnoremap <Leader>r :exec 'undo' undotree()['seq_last']<cr>
+
 " highlighting
 colorscheme charon
 syntax on
 highlight SignColumn NONE
-highlight! link EOLWhiteSpace Error
-highlight CursorLine guibg=green ctermbg=yellow guifg=black ctermbg=black term=reverse 
+highlight CursorLine guibg=green ctermbg=yellow guifg=black ctermbg=black term=reverse
 highlight SignatureMarkText guifg=green ctermfg=green guibg=black ctermbg=black
 highlight VertSplit guifg=darkgrey ctermfg=darkgrey
-aug hgroup
-au!
-au Syntax * syntax match EOLWhiteSpace "\s\+$"
-aug END
+highlight Whitespace guifg=green ctermfg=green gui=underline term=underline
 
 " subdued vertical split
 set fillchars+=vert:·
