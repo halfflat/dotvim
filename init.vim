@@ -32,7 +32,7 @@ let g:pathogen_blacklist=[]
 if v:version < 703 && !has("gui")
     let g:pathogen_blacklist=["csapprox"]
 endif
-set rtp+=~/.vim/bundle/pathogen
+runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 
 " buftabline plugin options
@@ -49,9 +49,6 @@ let g:DiffModeSync=0
 " vim-signature customization
 let g:SignatureMarkOrder="\m▶"
 let g:SignatureWrapJumps=0
-
-" riv plugin options
-let g:riv_disable_folding=1
 
 " latex-unicorder plugin options
 " (use own keybindings)
