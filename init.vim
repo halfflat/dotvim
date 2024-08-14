@@ -29,8 +29,11 @@ filetype plugin on
 
 " pathogen script manages .vim/bundle scripts
 let g:pathogen_blacklist=[]
-if v:version < 703 && !has("gui")
+if (v:version < 703 && !has("gui")) || has('nvim-0.10')
     let g:pathogen_blacklist=["csapprox"]
+endif
+if has('nvim-0.10') && $TERM =~ 'rxvt.*color'
+    set tgc
 endif
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
